@@ -5,8 +5,110 @@
 <meta name='viewport' content='width=device-width, initial-scale=1'>
 <meta name="viewport" content="width=device-width, initial-scale=0.5,maximum-scale=0.5">
 
+  <title>CodePen - Truck Packer Grid</title>
+  <meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=0.5,maximum-scale=0.5&quot;>
+
   
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
+<link rel='stylesheet' href='https://gridstackjs.com/demo/demo.css'>
+<link rel='stylesheet' href='https://gridstackjs.com/node_modules/gridstack/dist/gridstack-extra.min.css'>
+  
+<style>
+.sidebar {
+    background: rgba(203, 208, 213, 0.55);
+    padding: 10px 0;
+   /* height: 110px; */
+    text-align: center;
+}
+
+.sidebar .grid-stack-item-content {
+    width: 150px;
+    height: 150px;
+}
+
+.trash {
+    width: 150px!important;
+    height: 150px;
+}
+
+.sidebar .grid-stack-item {
+    width: 150px;
+    height: 150px;
+    border: 2px dashed #f8f9fa;
+    text-align: center;
+    line-height: 75px;
+    z-index: 10;
+    background: rgba(0, 255, 0, 0.1);
+    cursor: default;
+    display: inline-block;
+}
+
+.grid-stack>.grid-stack-item>.grid-stack-item-content {
+  background-color: #ff3300;
+  color: #ffffff;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 90px;
+}
+.grid-stack>.grid-stack-item>.grid-stack-item-content.hmb {
+  background-color: #8b4513;
+  color: #ffffff;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 90px;
+}
+.grid-stack>.grid-stack-item>.grid-stack-item-content.raw {
+  background-color: #ba8759;
+  color: #ffffff;
+  clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+  text-align: center;
+  vertical-align: middle;
+  line-height: 90px;
+}
+.grid-stack>.grid-stack-item>.grid-stack-item-content.pallet {
+  background-color: #cd853f;
+  overflow: hidden;
+  color: #ffffff;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 90px;
+}
+.sidebar .grid-stack-item .hmb {
+  background-color: #8b4513;
+  color: #ffffff;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 90px;
+}
+.sidebar .grid-stack-item .raw {
+  background-color: #ba8759;
+  color: #ffffff;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 90px;
+}
+.sidebar .grid-stack-item .pallet {
+  background-color: #cd853f;
+  color: #ffffff;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 90px;
+}
+.sidebar .grid-stack-item .rack {
+  background-color: #ff3300;
+  color: #ffffff;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 90px;
+}
+
+.grid-stack {
+rgb(211 211 206);
+}
+</style>
+
 </head>
+
 <body>
 <div class="container-fluid">
     <h1></h1>
@@ -107,7 +209,75 @@
       
     </div> <!-- row -->
 
+<script src='https://cdn.jsdelivr.net/npm/gridstack@5.1.1/dist/gridstack-jq.js'></script>
+<script src='https://gridstackjs.com/demo/events.js'></script>
+      <script>
+    let options = {
+      column: 4,
+      margin: 1,
+      minRow: 26, // don't collapse when empty
+      maxRow: 26,
+      cellHeight: 70,
+      disableOneColumnMode: true,
+      float: false,
+      // dragIn: '.sidebar .grid-stack-item', // add draggable to class
+      // dragInOptions: { revert: 'invalid', scroll: false, appendTo: 'body', helper: 'clone' }, // clone
+      removable: '.trash', // true or drag-out delete class
+      acceptWidgets: function(el) { return true; } // function example, but can also be: true | false | '.someClass' value
+    };
+    let grids = GridStack.initAll(options);
+    grids[1].float(true);
 
+    // new 4.x static method instead of setting up options on every grid (never been per grid really) but old options still works
+    GridStack.setupDragIn('.sidebar .grid-stack-item', { revert: 'invalid', scroll: false, appendTo: 'body', helper: myClone });
+    // GridStack.setupDragIn(); // second call will now work (cache last values)
 
+    let items = [
+  //    {x: 0, y: 1, w: 2, h: 2, content: 'HMB'},
+ //     {x: 2, y: 1, w: 2, h: 2, content: 'HMB'},
+ //     {x: 0, y: 2, w: 2, h: 2, content: 'Raw'},
+ //     {x: 2, y: 2, w: 2, h: 2, content: 'Raw'},
+//      {x: 0, y: 3, w: 4, h: 2,  maxW: 4, content: 'master'},
+ //     {x: 0, y: 4, w: 4, h: 2,  maxW: 4, content: 'master'},
+//      {x: 0, y: 5, w: 2, h: 2,  content: '3 up rack'},
+//      {x: 2, y: 5, w: 2, h: 2, content: '3 up rack'},
+//      {x: 1, y: 6, w: 4, h: 1,  maxW: 4, id: 'special', content: 'master'},
+//      {x: 0, y: 6, w: 2, h: 2, content: '3 up rack'},
+//      {x: 2, y: 6, w: 2, h: 2, content: '3 up rack'},
+//      {x: 0, y: 7, w: 2, h: 3, content: '4 up rack'},
+//      {x: 2, y: 7, w: 2, h: 3, content: '4 up rack'},
+//      {x: 0, y: 8, w: 2, h: 3, content: '4 up rack'},
+//      {x: 2, y: 8, w: 2, h: 3, content: '4 up rack'},
+//      {x: 0, y: 9, w: 2, h: 2, content: '3 up rack'},
+ //     {x: 2, y: 9, w: 2, h: 2, content: '3 up rack'},
+//      {x: 0, y: 10, w: 2, h: 2, content: '3 up rack'},
+//      {x: 2, y: 10, w: 2, h: 2, content: '3 up rack'},
+//      {x: 0, y: 11, w: 2, h: 2, content: '3 up rack'},
+//      {x: 2, y: 11, w: 2, h: 2, content: '3 up rack'},
+    ];
+
+    grids.forEach(function (grid, i) {
+      addEvents(grid, i);
+      grid.load(items);
+    });
+
+    // decide what the dropped item will be - for now just a clone but can be anything
+
+    function myClone(event) {
+      return event.target.cloneNode(true);
+    }
+
+    function toggleFloat(button, i) {
+      grids[i].float(! grids[i].getFloat());
+      button.innerHTML = 'float: ' + grids[i].getFloat();
+    }
+
+    function compact(i) {
+      grids[i].compact();
+    }
+
+// temp remove grid 2
+grids[1].destroy();  
+</script>
 </body>
 </html>
